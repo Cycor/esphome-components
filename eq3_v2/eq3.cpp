@@ -106,6 +106,12 @@ void EQ3Climate::reset_state() {
   if (valve) {
     valve->publish_state(NAN);
   }
+  if (eco) {
+    eco->publish_state(NAN);
+  }
+  if (comfort) {
+    comfort->publish_state(NAN);
+  }
 }
 
 void EQ3Climate::control(const ClimateCall &call) {
@@ -216,6 +222,14 @@ void EQ3Climate::parse_state(const std::string &data) {
 
   if (valve) {
     valve->publish_state(state->valve);
+  }
+  
+  if (eco) {
+    eco->publish_state(state->eco_temp);
+  }
+  
+  if (comfort) {
+    comfort->publish_state(state->comfort_temp);
   }
 
   publish_state();
