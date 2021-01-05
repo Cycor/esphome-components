@@ -37,7 +37,12 @@ public:
   esphome::climate::ClimateTraits traits();
   float get_setup_priority() const override { return esphome::setup_priority::LATE; }
   void set_address(uint64_t new_address) { address = new_address; }
+  
+  void set_offset(int32_t new_offset) { offset = new_offset; }
+  
   void set_valve(esphome::sensor::Sensor *sensor) { valve = sensor; }
+  void set_comfort(esphome::sensor::Sensor *sensor) { comfort = sensor; }
+  void set_eco(esphome::sensor::Sensor *sensor) { eco = sensor; }
   void set_time(esphome::time::RealTimeClock *clock) { time_clock = clock; }
   void set_temperature_sensor(esphome::sensor::Sensor *sensor) { temperature_sensor = sensor; };
 
@@ -80,8 +85,12 @@ private:
   void parse_schedule(const std::string &data);
   void parse_id(const std::string &data);
 
+  int32_t offset{0};
   uint64_t address{0};
   esphome::sensor::Sensor *valve{nullptr};
+  esphome::sensor::Sensor *eco{nullptr};
+  esphome::sensor::Sensor *comfort{nullptr};
+  
   esphome::time::RealTimeClock *time_clock{nullptr};
   /// The sensor used for getting the current temperature
   esphome::sensor::Sensor *temperature_sensor{nullptr};
