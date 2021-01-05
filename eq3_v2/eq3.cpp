@@ -218,6 +218,12 @@ void EQ3Climate::parse_state(const std::string &data) {
     mode = CLIMATE_MODE_AUTO;
   }
 
+  if(state->valve > 30) {
+    action = CLIMATE_ACTION_HEATING;
+  } else {
+    action = CLIMATE_ACTION_IDLE;
+  }
+
   away = state->mode.away_mode;
 
   if (valve) {
@@ -290,6 +296,7 @@ ClimateTraits EQ3Climate::traits() {
   if (this->temperature_sensor) {
     traits.set_supports_current_temperature(true);
   }
+  traits.set_supports_action(true);
   traits.set_supports_heat_mode(true);
   traits.set_supports_away(false); // currently not working
   traits.set_visual_min_temperature(EQ3BT_MIN_TEMP);
